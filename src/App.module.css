@@ -1,11 +1,24 @@
 .app {
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  min-height: 0;
 }
 
-.placeholder {
-  font-size: 14px;
-  color: #6b7280;
+.list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-200);
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+  padding-block: var(--space-200);
+}
+
+.status {
+  margin: auto;
+  color: var(--content-muted);
+  font-size: var(--font-size-sm);
 }
