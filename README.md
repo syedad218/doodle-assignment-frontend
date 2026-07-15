@@ -7,7 +7,7 @@ from all senders.
 
 - **Vite + React + TypeScript**
 - **TanStack Query**
-- **Tailwind CSS**
+- **CSS Modules**
 
 ## Setup
 

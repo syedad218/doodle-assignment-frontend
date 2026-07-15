@@ -1,7 +1,9 @@
+import styles from './App.module.css'
+
 function App() {
   return (
-    <main className="flex flex-1 items-center justify-center">
-      <p className="text-sm text-gray-500">Doodle assignment frontend</p>
+    <main className={styles.app}>
+      <p className={styles.placeholder}>Doodle assignment frontend</p>
     </main>
   )
 }
