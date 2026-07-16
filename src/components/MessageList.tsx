@@ -5,7 +5,9 @@ import { useMessages } from "@/hooks/useMessages";
 import { useSendMessage } from "@/hooks/useSendMessage";
 import styles from "./MessageList.module.css";
 
-const GAP = 16;
+const LIST_SPACING = 16;
+const ESTIMATED_ROW_HEIGHT = 84; // rough bubble height; refined by measureElement
+const OVERSCAN_ROWS = 8; // rows rendered beyond the visible edge for smoother scrolling
 
 type MessageListProps = {
   currentAuthor: string;
@@ -21,11 +23,11 @@ function MessageList({ currentAuthor }: MessageListProps) {
   const virtualizer = useVirtualizer({
     count: messageCount,
     getScrollElement: () => scrollRef.current,
-    estimateSize: () => 84, // rough bubble height; refined by measureElement
-    overscan: 8,
-    gap: GAP,
-    paddingStart: GAP,
-    paddingEnd: GAP,
+    estimateSize: () => ESTIMATED_ROW_HEIGHT,
+    overscan: OVERSCAN_ROWS,
+    gap: LIST_SPACING,
+    paddingStart: LIST_SPACING,
+    paddingEnd: LIST_SPACING,
   });
 
   useEffect(() => {
