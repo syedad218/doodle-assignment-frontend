@@ -6,7 +6,7 @@ import ChatInput from './ChatInput'
 const setup = () => {
   const onSend = vi.fn()
   const user = userEvent.setup()
-  render(<ChatInput onSend={onSend} />)
+  render(<ChatInput author="SwiftOtter42" onSend={onSend} />)
   return {
     onSend,
     user,
@@ -73,5 +73,14 @@ describe('ChatInput', () => {
 
     await user.type(field, 'x')
     expect(sendButton).toBeEnabled()
+  })
+
+  it('greets the author in the placeholder', () => {
+    const { field } = setup()
+
+    expect(field).toHaveAttribute(
+      'placeholder',
+      expect.stringContaining('SwiftOtter42'),
+    )
   })
 })

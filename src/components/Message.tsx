@@ -16,9 +16,17 @@ function MessageItem({ message, isOwn }: MessageProps) {
   return (
     <div className={`${styles.wrapper} ${isOwn ? styles.sent : styles.received}`}>
       <div className={styles.bubble}>
-        {!isOwn && <span className={styles.author}>{message.author}</span>}
+        {!isOwn && (
+          <span className={styles.author} data-testid="message-author">
+            {message.author}
+          </span>
+        )}
         <p className={styles.body}>{text}</p>
-        <time className={styles.timestamp} dateTime={message.createdAt}>
+        <time
+          className={styles.timestamp}
+          dateTime={message.createdAt}
+          data-testid="message-timestamp"
+        >
           {timestamp}
         </time>
       </div>

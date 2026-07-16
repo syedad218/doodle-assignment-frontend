@@ -4,12 +4,15 @@
   padding-block: var(--space-200);
 }
 
+.content {
+  max-width: 640px;
+  margin-inline: auto;
+  padding-inline: var(--space-300);
+}
+
 .inputForm {
   display: flex;
   gap: var(--space-150);
-  max-width: 640px;
-  padding-inline: var(--space-300);
-  margin-inline: auto;
 }
 
 .messageInput {
@@ -24,6 +27,11 @@
   background: var(--surface-default);
   color: var(--content-default);
   resize: none;
+}
+
+.messageInput::placeholder {
+  color: var(--content-muted);
+  opacity: 0.85;
 }
 
 .messageInput:focus-visible {
@@ -54,8 +62,10 @@
 }
 
 @media (max-width: 640px) {
+  .content {
+    padding-inline: var(--space-100); /* 8px */
+  }
   .inputForm {
     gap: var(--space-100);
-    padding-inline: var(--space-100); /* 8px */
   }
 }

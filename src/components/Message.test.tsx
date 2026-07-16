@@ -14,7 +14,7 @@ describe('Message', () => {
   it('renders the author, body and timestamp of a received message', () => {
     render(<Message message={message} isOwn={false} />)
 
-    expect(screen.getByText('martin57')).toBeInTheDocument()
+    expect(screen.getByTestId('message-author')).toHaveTextContent('martin57')
     expect(screen.getByText('Thanks Peter')).toBeInTheDocument()
     expect(screen.getByText('10 Mar 2018 10:19')).toBeInTheDocument()
   })
@@ -22,7 +22,7 @@ describe('Message', () => {
   it('hides the author on own messages', () => {
     render(<Message message={{ ...message, author: 'Syed' }} isOwn />)
 
-    expect(screen.queryByText('Syed')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('message-author')).not.toBeInTheDocument()
     expect(screen.getByText('Thanks Peter')).toBeInTheDocument()
   })
 
@@ -52,7 +52,7 @@ describe('Message', () => {
   it('exposes a raw ISO formatted timestamp', () => {
     render(<Message message={message} isOwn={false} />)
 
-    expect(screen.getByText('10 Mar 2018 10:19')).toHaveAttribute(
+    expect(screen.getByTestId('message-timestamp')).toHaveAttribute(
       'dateTime',
       '2018-03-10T10:19:00.000Z',
     )

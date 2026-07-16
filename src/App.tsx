@@ -1,16 +1,17 @@
 import Message from "@/components/Message";
+import ChatHeader from "@/components/ChatHeader";
 import ChatInput from "@/components/ChatInput";
 import { useMessages } from "@/hooks/useMessages";
+import { useAuthor } from "@/hooks/useAuthor";
 import styles from "./App.module.css";
 
-// TODO: replace with the generated author name
-const CURRENT_AUTHOR = "Luka";
-
 function App() {
+  const author = useAuthor();
   const { data: messages, isPending, isError, error } = useMessages();
 
   return (
     <div className={styles.app}>
+      <ChatHeader />
       <main className={styles.messages}>
         <div className={styles.messageList}>
           {isPending && <p className={styles.status}>Loading messages…</p>}
@@ -23,12 +24,15 @@ function App() {
             <Message
               key={message._id}
               message={message}
-              isOwn={message.author === CURRENT_AUTHOR}
+              isOwn={message.author === author}
             />
           ))}
         </div>
       </main>
-      <ChatInput onSend={(text) => console.log("send:", text)} />
+      <ChatInput
+        author={author}
+        onSend={(text) => console.log("send:", text)}
+      />
     </div>
   );
 }
