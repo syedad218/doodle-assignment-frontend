@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import Message from "@/components/Message";
 import { useMessages } from "@/hooks/useMessages";
+import { useMessageListScroll } from "@/hooks/useMessageListScroll";
 import { useSendMessage } from "@/hooks/useSendMessage";
 import styles from "./MessageList.module.css";
 
@@ -30,28 +31,20 @@ function MessageList({ currentAuthor }: MessageListProps) {
     paddingEnd: LIST_SPACING,
   });
 
-  useEffect(() => {
-    if (messageCount > 0) {
-      virtualizer.scrollToIndex(messageCount - 1, { align: "end" });
-    }
-  }, [messageCount, virtualizer]);
+  const { onScroll, hasUnseenMessages, jumpToLatest } = useMessageListScroll(
+    scrollRef,
+    virtualizer,
+    messages,
+  );
+
+  const placeholderText = () => {
+    if (isPending) return "Loading messages…";
+    if (isError) return `Failed to load messages: ${error?.message ?? ""}`;
+    return "Type your first message 👋";
+  };
 
   const renderMessageList = () => {
-    if (isPending) {
-      return (
-        <div className={styles.placeholder}>
-          <p className={styles.placeholderText}>Loading messages…</p>
-        </div>
-      );
-    } else if (isError) {
-      return (
-        <div className={styles.placeholder}>
-          <p className={styles.placeholderText}>
-            Failed to load messages: {error?.message}
-          </p>
-        </div>
-      );
-    } else if (hasMessages) {
+    if (hasMessages) {
       return virtualizer.getVirtualItems().map((item) => {
         const message = messages[item.index];
         return (
@@ -70,24 +63,40 @@ function MessageList({ currentAuthor }: MessageListProps) {
           </div>
         );
       });
-    } else if (messages) {
-      return (
-        <div className={styles.placeholder}>
-          <p className={styles.placeholderText}>Type your first message 👋</p>
-        </div>
-      );
     }
+
+    return (
+      <div className={styles.placeholder}>
+        <p className={styles.placeholderText}>{placeholderText()}</p>
+      </div>
+    );
   };
 
   return (
-    <main ref={scrollRef} className={styles.messageScroller}>
-      <div
-        className={styles.scrollContent}
-        style={{ height: hasMessages ? virtualizer.getTotalSize() : "100%" }}
+    <div className={styles.messagePane}>
+      <main
+        ref={scrollRef}
+        className={styles.messageScroller}
+        onScroll={onScroll}
       >
-        {renderMessageList()}
-      </div>
-    </main>
+        <div
+          className={styles.scrollContent}
+          style={{ height: hasMessages ? virtualizer.getTotalSize() : "100%" }}
+        >
+          {renderMessageList()}
+        </div>
+      </main>
+
+      {hasUnseenMessages && (
+        <button
+          type="button"
+          className={styles.jumpToLatest}
+          onClick={jumpToLatest}
+        >
+          New messages ↓
+        </button>
+      )}
+    </div>
   );
 }
 

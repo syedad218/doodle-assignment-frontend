@@ -7,17 +7,21 @@ function createQueryWrapper() {
     defaultOptions: { queries: { retry: false } },
   })
 
-  return function QueryWrapper({ children }: { children: ReactNode }) {
+  function QueryWrapper({ children }: Readonly<{ children: ReactNode }>) {
     return (
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     )
   }
+
+  return { queryClient, QueryWrapper }
 }
 
 export function renderWithClient(ui: ReactElement) {
-  return render(ui, { wrapper: createQueryWrapper() })
+  const { queryClient, QueryWrapper } = createQueryWrapper()
+  return { ...render(ui, { wrapper: QueryWrapper }), queryClient }
 }
 
 export function renderHookWithClient<Result>(hook: () => Result) {
-  return renderHook(hook, { wrapper: createQueryWrapper() })
+  const { queryClient, QueryWrapper } = createQueryWrapper()
+  return { ...renderHook(hook, { wrapper: QueryWrapper }), queryClient }
 }

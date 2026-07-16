@@ -1,8 +1,33 @@
+.messagePane {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
 .messageScroller {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+.jumpToLatest {
+  position: absolute;
+  bottom: var(--space-200);
+  left: 50%;
+  transform: translateX(-50%);
+  border: none;
+  border-radius: 999px;
+  padding: var(--space-100) var(--space-200);
+  background: var(--surface-accent);
+  color: var(--content-on-accent);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.2);
 }
 
 .scrollContent {

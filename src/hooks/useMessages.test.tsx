@@ -1,4 +1,4 @@
-import { waitFor } from '@testing-library/react'
+import { act, waitFor } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { describe, expect, it } from 'vitest'
 import { useMessages } from './useMessages'
@@ -58,5 +58,61 @@ describe('useMessages', () => {
 
     expect(result.current.isPending).toBe(true)
     expect(result.current.data).toBeUndefined()
+  })
+
+  it('polls with an after cursor and appends only the new messages', async () => {
+    const incoming = {
+      _id: '3',
+      author: 'Nina',
+      message: 'Fresh from the server',
+      createdAt: '2018-03-10T10:20:00.000Z',
+    }
+    let afterParam: string | null = null
+    server.use(
+      http.get(`${BASE_URL}/messages`, ({ request }) => {
+        const url = new URL(request.url)
+        if (url.searchParams.has('after')) {
+          afterParam = url.searchParams.get('after')
+          return HttpResponse.json([incoming])
+        }
+        return HttpResponse.json(seedMessages)
+      }),
+    )
+
+    const { result } = renderUseMessages()
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+    
+    expect(result.current.data).toHaveLength(seedMessages.length)
+
+    await act(async () => {
+      await result.current.refetch()
+    })
+
+    expect(afterParam).toBe(seedMessages.at(-1)!.createdAt)
+    await waitFor(() =>
+      expect(result.current.data).toHaveLength(seedMessages.length + 1),
+    )
+    expect(result.current.data!.at(-1)!._id).toBe('3')
+  })
+
+  it('does not duplicate messages the poll returns again', async () => {
+    server.use(
+      http.get(`${BASE_URL}/messages`, ({ request }) => {
+        const url = new URL(request.url)
+        if (url.searchParams.has('after')) {
+          // Server re-sends an already-known message
+          return HttpResponse.json([seedMessages[1]])
+        }
+        return HttpResponse.json(seedMessages)
+      }),
+    )
+
+    const { result } = renderUseMessages()
+    await waitFor(() => expect(result.current.isSuccess).toBe(true))
+    
+    await act(async () => {
+      const refetched = await result.current.refetch()
+      expect(refetched.data).toEqual(seedMessages)
+    })
   })
 })
