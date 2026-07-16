@@ -3,7 +3,6 @@
   "plugins": ["react", "typescript", "oxc", "jsx-a11y"],
   "rules": {
     "react/rules-of-hooks": "error",
-    "jsx-a11y/no-noninteractive-tabindex": ["warn", { "roles": ["tabpanel", "log"] }],
     "react/only-export-components": ["warn", { "allowConstantExport": true }]
   },
   "overrides": [

@@ -5,9 +5,9 @@ import type { ChatMessage } from "@/types/messages";
 
 const NEAR_BOTTOM_PX = 100; // within this distance the view sticks to new messages
 
-export function useMessageListScroll(
-  scrollRef: RefObject<HTMLElement | null>,
-  virtualizer: Virtualizer<HTMLElement, Element>,
+export function useMessageListScroll<TScrollElement extends HTMLElement>(
+  scrollRef: RefObject<TScrollElement | null>,
+  virtualizer: Virtualizer<TScrollElement, Element>,
   messages: ChatMessage[] | undefined,
 ) {
   const isNearBottomRef = useRef(true);

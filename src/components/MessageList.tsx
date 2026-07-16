@@ -74,12 +74,11 @@ function MessageList({ currentAuthor }: MessageListProps) {
 
   return (
     <div className={styles.messagePane}>
-      <main
+      <section
         ref={scrollRef}
         className={styles.messageScroller}
         onScroll={onScroll}
-        role="log"
-        aria-live="off"
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
         aria-label="Message history"
       >
@@ -89,7 +88,7 @@ function MessageList({ currentAuthor }: MessageListProps) {
         >
           {renderMessageList()}
         </div>
-      </main>
+      </section>
 
       {hasUnseenMessages && (
         <button

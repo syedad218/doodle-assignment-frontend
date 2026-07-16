@@ -12,7 +12,9 @@ function App() {
   return (
     <div className={styles.app}>
       <ChatHeader />
-      <MessageList currentAuthor={author} />
+      <main className={styles.main}>
+        <MessageList currentAuthor={author} />
+      </main>
       <ChatInput
         author={author}
         onSend={(text) => sendMessage({ author, message: text })}
