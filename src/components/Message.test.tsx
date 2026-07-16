@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
 import Message from './Message'
 import type { Message as MessageModel } from '@/types/messages'
 
@@ -56,5 +57,24 @@ describe('Message', () => {
       'dateTime',
       '2018-03-10T10:19:00.000Z',
     )
+  })
+
+  it('shows a sending indicator instead of a timestamp while pending', () => {
+    render(<Message message={{ ...message, status: 'pending' }} isOwn />)
+
+    expect(screen.getByText('Sending…')).toBeInTheDocument()
+    expect(screen.queryByTestId('message-timestamp')).not.toBeInTheDocument()
+  })
+
+  it('offers a retry on a failed message', async () => {
+    const onRetry = vi.fn()
+    const failed = { ...message, status: 'failed' as const }
+    render(<Message message={failed} isOwn onRetry={onRetry} />)
+
+    expect(screen.getByText(/Failed to send/)).toBeInTheDocument()
+    expect(screen.queryByTestId('message-timestamp')).not.toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Retry' }))
+    expect(onRetry).toHaveBeenCalledExactlyOnceWith(failed)
   })
 })

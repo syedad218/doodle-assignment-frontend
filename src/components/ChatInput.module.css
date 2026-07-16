@@ -29,9 +29,17 @@
   resize: none;
 }
 
+.messageInput:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
 .messageInput::placeholder {
   color: var(--content-muted);
   opacity: 0.85;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .messageInput:focus-visible {
@@ -67,5 +75,8 @@
   }
   .inputForm {
     gap: var(--space-100);
+  }
+  .messageInput::placeholder {
+    font-size: var(--font-size-xs);
   }
 }

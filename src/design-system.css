@@ -33,6 +33,7 @@
   --content-muted: var(--neutral-500);
   --content-faint: var(--neutral-400);
   --content-on-accent: var(--neutral-0);
+  --content-danger: var(--coral-600);
 
   --surface-default: var(--neutral-0);
   --surface-highlight: var(--yellow-200);

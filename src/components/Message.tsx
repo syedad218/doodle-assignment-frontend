@@ -1,20 +1,61 @@
 import { memo } from 'react'
 import { decode } from 'html-entities'
-import type { Message } from '@/types/messages'
+import type { ChatMessage } from '@/types/messages'
 import { formatTimestamp } from '@/lib/date'
+import { MESSAGE_STATUS } from '@/lib/constants'
 import styles from './Message.module.css'
 
 type MessageProps = {
-  message: Message
+  message: ChatMessage
   isOwn: boolean
+  onRetry?: (message: ChatMessage) => void
 }
 
-function MessageItem({ message, isOwn }: MessageProps) {
+function MessageItem({ message, isOwn, onRetry }: MessageProps) {
   const text = decode(message.message)
   const timestamp = formatTimestamp(message.createdAt)
 
+  const className = [
+    styles.wrapper,
+    isOwn ? styles.sent : styles.received,
+    message.status === MESSAGE_STATUS.pending && styles.pending,
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  const renderDeliveryStatus = () => {
+    if (message.status === MESSAGE_STATUS.pending) {
+      return <span className={styles.sending}>Sending…</span>
+    }
+
+    if (message.status === MESSAGE_STATUS.failed) {
+      return (
+        <span className={styles.failed}>
+          Failed to send.{' '}
+          <button
+            type="button"
+            className={styles.retryButton}
+            onClick={() => onRetry?.(message)}
+          >
+            Retry
+          </button>
+        </span>
+      )
+    }
+
+    return (
+      <time
+        className={styles.timestamp}
+        dateTime={message.createdAt}
+        data-testid="message-timestamp"
+      >
+        {timestamp}
+      </time>
+    )
+  }
+
   return (
-    <div className={`${styles.wrapper} ${isOwn ? styles.sent : styles.received}`}>
+    <div className={className}>
       <div className={styles.bubble}>
         {!isOwn && (
           <span className={styles.author} data-testid="message-author">
@@ -22,13 +63,7 @@ function MessageItem({ message, isOwn }: MessageProps) {
           </span>
         )}
         <p className={styles.body}>{text}</p>
-        <time
-          className={styles.timestamp}
-          dateTime={message.createdAt}
-          data-testid="message-timestamp"
-        >
-          {timestamp}
-        </time>
+        {renderDeliveryStatus()}
       </div>
     </div>
   )

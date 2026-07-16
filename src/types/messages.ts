@@ -1,8 +1,9 @@
+import type { MESSAGE_STATUS } from '@/lib/constants'
+
 export type Message = {
   _id: string
   author: string
   message: string
-  /** ISO 8601 timestamp assigned by the server. */
   createdAt: string
 }
 
@@ -10,6 +11,13 @@ export type Message = {
 export type NewMessage = {
   author: string
   message: string
+}
+
+export type MessageStatus =
+  (typeof MESSAGE_STATUS)[keyof typeof MESSAGE_STATUS]
+
+export type ChatMessage = Message & {
+  status?: MessageStatus
 }
 
 /** Query params for listing messages (GET /messages). */
