@@ -1,0 +1,16 @@
+#!/bin/sh
+# Pre-commit checks: lint, typecheck, tests (with coverage), then refresh the
+# README coverage badge.
+set -e
+
+echo "pre-commit: lint…"
+npm run --silent lint
+
+echo "pre-commit: type check…"
+npm run --silent types:check
+
+echo "pre-commit: tests with coverage…"
+npm run --silent test:coverage -- --silent
+
+node scripts/update-coverage-badge.mjs
+git add README.md

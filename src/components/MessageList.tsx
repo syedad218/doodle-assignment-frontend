@@ -78,6 +78,8 @@ function MessageList({ currentAuthor }: MessageListProps) {
         ref={scrollRef}
         className={styles.messageScroller}
         onScroll={onScroll}
+        role="log"
+        aria-live="off"
         tabIndex={0}
         aria-label="Message history"
       >

@@ -79,7 +79,7 @@ describe('MessageList', () => {
     renderWithClient(<MessageList currentAuthor="SwiftOtter42" />)
     await screen.findByText(seedMessages[0].message)
 
-    const scroller = screen.getByRole('main', { name: 'Message history' })
+    const scroller = screen.getByRole('log', { name: 'Message history' })
     expect(scroller).toHaveAttribute('tabindex', '0')
   })
 

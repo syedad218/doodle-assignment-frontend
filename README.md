@@ -1,5 +1,7 @@
 # Doodle Chat
 
+![coverage](https://img.shields.io/badge/coverage-95.48%25-brightgreen)
+
 A chat frontend for the Doodle frontend challenge, goal is to send and display messages
 from all senders.
 
@@ -40,6 +42,11 @@ Hooks own all data logic and components only render what's in the cache.
 ### Testing
 
 Vitest + Testing Library, with the API mocked via MSW: `npm run test:run`.
+
+A pre-commit hook ([.githooks/pre-commit](.githooks/pre-commit), installed by
+`npm install` via the `prepare` script) runs lint, type check, and the test
+suite with coverage, then refreshes the coverage badge above on every commit
+(`npm run test:coverage` to run it manually).
 
 ## Setup
 
