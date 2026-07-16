@@ -13,6 +13,11 @@
   overscroll-behavior: contain;
 }
 
+.messageScroller:focus-visible {
+  outline: 2px solid var(--surface-accent);
+  outline-offset: -2px;
+}
+
 .jumpToLatest {
   position: absolute;
   bottom: var(--space-200);
@@ -28,6 +33,11 @@
   font-weight: 600;
   cursor: pointer;
   box-shadow: 0 2px 8px rgb(0 0 0 / 0.2);
+}
+
+.jumpToLatest:focus-visible {
+  outline: 2px solid var(--surface-accent);
+  outline-offset: 2px;
 }
 
 .scrollContent {

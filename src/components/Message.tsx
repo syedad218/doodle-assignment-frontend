@@ -30,7 +30,7 @@ function MessageItem({ message, isOwn, onRetry }: MessageProps) {
 
     if (message.status === MESSAGE_STATUS.failed) {
       return (
-        <span className={styles.failed}>
+        <span className={styles.failed} role="alert">
           Failed to send.{' '}
           <button
             type="button"

@@ -9,8 +9,11 @@
 
   --blue-500: #2d9cdb;
   --blue-600: #2589c2;
+  --blue-700: #1d7bb0;
   --coral-500: #f96a5b;
   --coral-600: #e85748;
+  --coral-700: #d1402f;
+  --coral-800: #b0361f;
   --purple-500: #ba5ada;
   --yellow-200: #fbf5c7;
 
@@ -30,16 +33,15 @@
   --radius-100: 0.5rem; /* 8px */
 
   --content-default: var(--neutral-900);
-  --content-muted: var(--neutral-500);
-  --content-faint: var(--neutral-400);
+  --content-muted: var(--neutral-700);
   --content-on-accent: var(--neutral-0);
-  --content-danger: var(--coral-600);
+  --content-danger: var(--coral-800);
 
   --surface-default: var(--neutral-0);
   --surface-highlight: var(--yellow-200);
-  --surface-accent: var(--blue-500);
-  --surface-action: var(--coral-500);
-  --surface-action-hover: var(--coral-600);
+  --surface-accent: var(--blue-700);
+  --surface-action: var(--coral-700);
+  --surface-action-hover: var(--coral-800);
   --surface-brand: var(--purple-500);
 
   --border-default: var(--neutral-200);

@@ -78,6 +78,8 @@ function MessageList({ currentAuthor }: MessageListProps) {
         ref={scrollRef}
         className={styles.messageScroller}
         onScroll={onScroll}
+        tabIndex={0}
+        aria-label="Message history"
       >
         <div
           className={styles.scrollContent}
@@ -93,7 +95,7 @@ function MessageList({ currentAuthor }: MessageListProps) {
           className={styles.jumpToLatest}
           onClick={jumpToLatest}
         >
-          New messages ↓
+          New messages <span aria-hidden="true">↓</span>
         </button>
       )}
     </div>

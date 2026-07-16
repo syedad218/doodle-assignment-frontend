@@ -71,7 +71,7 @@ describe('Message', () => {
     const failed = { ...message, status: 'failed' as const }
     render(<Message message={failed} isOwn onRetry={onRetry} />)
 
-    expect(screen.getByText(/Failed to send/)).toBeInTheDocument()
+    expect(screen.getByRole('alert')).toHaveTextContent('Failed to send.')
     expect(screen.queryByTestId('message-timestamp')).not.toBeInTheDocument()
 
     await userEvent.click(screen.getByRole('button', { name: 'Retry' }))

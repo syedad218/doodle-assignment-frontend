@@ -36,7 +36,7 @@
 
 .messageInput::placeholder {
   color: var(--content-muted);
-  opacity: 0.85;
+  opacity: 1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -58,6 +58,11 @@
   font-size: var(--font-size-md);
   font-weight: 600;
   cursor: pointer;
+}
+
+.sendButton:focus-visible {
+  outline: 2px solid var(--surface-accent);
+  outline-offset: 2px;
 }
 
 .sendButton:hover:not(:disabled) {

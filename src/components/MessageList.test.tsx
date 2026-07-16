@@ -75,6 +75,14 @@ describe('MessageList', () => {
     expect(authors[0]).toHaveTextContent(seedMessages[1].author)
   })
 
+  it('exposes the history as a labeled, keyboard-focusable scroll region', async () => {
+    renderWithClient(<MessageList currentAuthor="SwiftOtter42" />)
+    await screen.findByText(seedMessages[0].message)
+
+    const scroller = screen.getByRole('main', { name: 'Message history' })
+    expect(scroller).toHaveAttribute('tabindex', '0')
+  })
+
   it('keeps showing the chat when a background refresh fails', async () => {
     // First load succeeds, every request after that fails.
     server.use(
