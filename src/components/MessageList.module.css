@@ -11,6 +11,7 @@
   min-height: 0;
   overflow-y: auto;
   overscroll-behavior: contain;
+  border: 2px solid transparent;
 }
 
 .messageScroller:focus-visible {
