@@ -39,6 +39,13 @@ Hooks own all data logic and components only render what's in the cache.
   ([design-system.css](src/design-system.css)). The UI is keyboard-navigable
   with visible focus indicators and WCAG-conformant contrast ratios.
 
+### Performance & Accessibility
+
+Lighthouse (mobile) on the production build (`npm run build && npm run preview`):
+**99 Performance / 100 Accessibility**.
+
+![Lighthouse mobile scores: Performance 99, Accessibility 100](docs/lighthouse-mobile.png)
+
 ### Testing
 
 Vitest + Testing Library, with the API mocked via MSW: `npm run test:run`.
