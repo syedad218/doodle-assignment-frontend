@@ -12,7 +12,7 @@ describe('getMessages', () => {
     await expect(getMessages()).resolves.toEqual(seedMessages)
   })
 
-  it('shows the user a generic ApiError but logs the precise detail', async () => {
+  it('throws ApiError and logs the error details when the API response validation fails', async () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
     server.use(
       http.get(`${BASE_URL}/messages`, () =>

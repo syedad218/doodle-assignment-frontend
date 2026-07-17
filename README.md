@@ -55,9 +55,9 @@ A pre-commit hook ([.githooks/pre-commit](.githooks/pre-commit), installed by
 suite with coverage, then refreshes the coverage badge above on every commit
 (`npm run test:coverage` to run it manually).
 
-## Next steps
+## Next steps 🤓
 
-- **Paginate older history** — the initial load currently fetches the whole message list. Bound it
+- **Paginate older messages history** — the initial load currently fetches the whole message list. Bound it
   with `limit` and lazily fetch older pages with the `before` cursor as the user scrolls up (both
   already supported by [getMessages](src/api/messages.ts)).
   
