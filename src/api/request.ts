@@ -1,4 +1,5 @@
-import { toApiError } from './errors'
+import { prettifyError, type ZodMiniType } from 'zod/mini'
+import { ApiError, toApiError } from './errors'
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
 const TOKEN = import.meta.env.VITE_API_TOKEN
@@ -9,15 +10,16 @@ if (!BASE_URL || !TOKEN) {
   )
 }
 
-type RequestOptions = {
+type RequestOptions<T> = {
   method?: 'GET' | 'POST'
   body?: unknown
   params?: Record<string, string | number | undefined>
+  responseSchema?: ZodMiniType<T>
 }
 
 export async function apiFetch<T>(
   path: string,
-  { method = 'GET', body, params }: RequestOptions = {},
+  { method = 'GET', body, params, responseSchema }: RequestOptions<T> = {},
 ): Promise<T> {
   const url = new URL(`${BASE_URL}${path}`)
   if (params) {
@@ -39,5 +41,15 @@ export async function apiFetch<T>(
     throw await toApiError(response)
   }
 
-  return response.json() as Promise<T>
+  const data = await response.json()
+  if (!responseSchema) return data as T
+
+  const result = responseSchema.safeParse(data)
+  if (!result.success) {
+    console.error(
+      `Malformed API response from ${path}:\n${prettifyError(result.error)}`,
+    )
+    throw new ApiError(200, 'Received an unexpected response from the server.')
+  }
+  return result.data
 }

@@ -1,11 +1,17 @@
+import * as z from 'zod/mini'
 import type { MESSAGE_STATUS } from '@/lib/constants'
 
-export type Message = {
-  _id: string
-  author: string
-  message: string
-  createdAt: string
-}
+/** Runtime schema for a message returned by the API. */
+export const messageSchema = z.object({
+  _id: z.string(),
+  author: z.string(),
+  message: z.string(),
+  createdAt: z.string(),
+})
+
+export const messagesSchema = z.array(messageSchema)
+
+export type Message = z.infer<typeof messageSchema>
 
 /** Payload for creating a message (POST /messages body). */
 export type NewMessage = {
