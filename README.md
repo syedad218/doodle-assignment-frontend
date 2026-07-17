@@ -57,7 +57,7 @@ suite with coverage, then refreshes the coverage badge above on every commit
 
 ## Setup
 
-The [chat API](https://github.com/DoodleScheduling/frontend-challenge-chat-api)
+The BE for [chat API](https://github.com/DoodleScheduling/frontend-challenge-chat-api)
 must be running locally first.
 
 ```sh
