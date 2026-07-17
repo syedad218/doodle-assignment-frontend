@@ -1,18 +1,17 @@
 .footer {
   flex-shrink: 0;
   background: var(--surface-accent);
-  padding-block: var(--space-200);
+  padding: var(--space-100);
 }
 
 .content {
-  max-width: 640px;
+  max-width: 592px;
   margin-inline: auto;
-  padding-inline: var(--space-300);
 }
 
 .inputForm {
   display: flex;
-  gap: var(--space-150);
+  gap: var(--space-100);
 }
 
 .messageInput {
@@ -20,7 +19,7 @@
   min-width: 0;
   border: none;
   border-radius: var(--radius-050);
-  padding: var(--space-150) var(--space-200);
+  padding: var(--space-150) var(--space-100);
   font-family: inherit;
   font-size: var(--font-size-md);
   line-height: 1.4;
@@ -75,12 +74,6 @@
 }
 
 @media (max-width: 640px) {
-  .content {
-    padding-inline: var(--space-100); /* 8px */
-  }
-  .inputForm {
-    gap: var(--space-100);
-  }
   .messageInput::placeholder {
     font-size: var(--font-size-xs);
   }
