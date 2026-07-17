@@ -7,7 +7,7 @@ from all senders.
 
 ## Demo
 
-[![Watch the demo](https://cdn.loom.com/sessions/thumbnails/6adad9606dcb45cf9942e530b9ac2ea1-with-play.gif)](https://www.loom.com/share/6adad9606dcb45cf9942e530b9ac2ea1)
+https://www.loom.com/share/6adad9606dcb45cf9942e530b9ac2ea1
 
 ## Stack
 
