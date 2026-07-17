@@ -43,6 +43,14 @@ Hooks own all data logic and components only render what's in the cache.
   ([design-system.css](src/design-system.css)). The UI is keyboard-navigable
   with visible focus indicators and WCAG-conformant contrast ratios.
 
+### Responsive
+
+The layout is responsive and adjusts to different screen sizes, from mobile to tablet.
+
+| Mobile (375px) | Large phone (430px) | Tablet (1024px) |
+| --- | --- | --- |
+| ![Chat on iPhone SE, 375px wide](docs/responsive-mobile.png) | ![Chat on iPhone 14 Pro Max, 430px wide](docs/responsive-large-phone.png) | ![Chat on iPad Pro, 1024px wide](docs/responsive-tablet.png) |
+
 ### Performance & Accessibility
 
 Lighthouse (mobile) on the production build (`npm run build && npm run preview`):
