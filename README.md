@@ -55,6 +55,16 @@ A pre-commit hook ([.githooks/pre-commit](.githooks/pre-commit), installed by
 suite with coverage, then refreshes the coverage badge above on every commit
 (`npm run test:coverage` to run it manually).
 
+## Next steps
+
+- **Paginate older history** — the initial load currently fetches the whole message list. Bound it
+  with `limit` and lazily fetch older pages with the `before` cursor as the user scrolls up (both
+  already supported by [getMessages](src/api/messages.ts)).
+  
+  Loading the whole chat history means every visit downloads messages the user may never scroll to, and
+  that cost grows with the conversation. Pagination fetches only the latest messages up front and loads
+  older messages on demand, so initial load stays fast however long the chat gets.
+
 ## Setup
 
 The BE for [chat API](https://github.com/DoodleScheduling/frontend-challenge-chat-api)
