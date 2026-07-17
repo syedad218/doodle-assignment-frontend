@@ -6,8 +6,10 @@ import { useMessageListScroll } from "@/hooks/useMessageListScroll";
 import { useSendMessage } from "@/hooks/useSendMessage";
 import styles from "./MessageList.module.css";
 
-const LIST_SPACING = 16;
-const ESTIMATED_ROW_HEIGHT = 84; // rough bubble height; refined by measureElement
+const LIST_SPACING = 16; // padding above the first / below the last row
+const GAP_SAME_SIDE = 8; // between consecutive messages on the same side
+const GAP_SIDE_SWITCH = 16; // when the sender side flips (own ↔ other)
+const ESTIMATED_ROW_HEIGHT = 84; // rough bubble height later refined by measureElement.
 const OVERSCAN_ROWS = 8; // rows rendered beyond the visible edge for smoother scrolling
 
 type MessageListProps = {
@@ -26,7 +28,6 @@ function MessageList({ currentAuthor }: MessageListProps) {
     getScrollElement: () => scrollRef.current,
     estimateSize: () => ESTIMATED_ROW_HEIGHT,
     overscan: OVERSCAN_ROWS,
-    gap: LIST_SPACING,
     paddingStart: LIST_SPACING,
     paddingEnd: LIST_SPACING,
   });
@@ -47,19 +48,26 @@ function MessageList({ currentAuthor }: MessageListProps) {
     if (hasMessages) {
       return virtualizer.getVirtualItems().map((item) => {
         const message = messages[item.index];
+        const isOwn = message.author === currentAuthor;
+
+        let gapTop = 0;
+        if (item.index > 0) {
+          const prevIsOwn = messages[item.index - 1].author === currentAuthor;
+          gapTop = prevIsOwn === isOwn ? GAP_SAME_SIDE : GAP_SIDE_SWITCH;
+        }
+
         return (
           <div
             key={message._id}
             data-index={item.index}
             ref={virtualizer.measureElement}
             className={styles.messageRow}
-            style={{ transform: `translateY(${item.start}px)` }}
+            style={{
+              transform: `translateY(${item.start}px)`,
+              paddingTop: gapTop,
+            }}
           >
-            <Message
-              message={message}
-              isOwn={message.author === currentAuthor}
-              onRetry={retry}
-            />
+            <Message message={message} isOwn={isOwn} onRetry={retry} />
           </div>
         );
       });

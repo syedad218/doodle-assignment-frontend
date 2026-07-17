@@ -1,6 +1,6 @@
 # Doodle Chat
 
-![coverage](https://img.shields.io/badge/coverage-95.48%25-brightgreen)
+![coverage](https://img.shields.io/badge/coverage-95.67%25-brightgreen)
 
 A chat frontend for the Doodle frontend challenge, goal is to send and display messages
 from all senders.
