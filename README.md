@@ -5,10 +5,6 @@
 A chat frontend for the Doodle frontend challenge, goal is to send and display messages
 from all senders.
 
-## Demo
-
-https://www.loom.com/share/6adad9606dcb45cf9942e530b9ac2ea1
-
 ## Stack
 
 - **Vite + React + TypeScript**
